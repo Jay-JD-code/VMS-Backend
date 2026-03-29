@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+
+  eureka-server:
+    build: ./eureka-server/VMS-EUREKA-SERVER
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    restart: always
+
+  api-gateway:
+    build: ./api-gateway/VMS-API-GATEWAY
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - eureka-server
+
+  auth-service:
+    build: ./auth-service/VMS-AUTH
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  vendor-service:
+    build: ./vendor-service/VMS-VENDOR
+    container_name: vendor-service
+    ports:
+      - "8082:8082"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  document-service:
+    build: ./document-service/VMS-DOCUMENT
+    container_name: document-service
+    ports:
+      - "8083:8083"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  order-service:
+    build: ./order-service/VMS-ORDERS
+    container_name: order-service
+    ports:
+      - "8084:8084"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  payment-service:
+    build: ./payment-service/VMS-PAYMENTS
+    container_name: payment-service
+    ports:
+      - "8085:8085"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  performance-service:
+    build: ./performance-service/VMS-PERFORMANCE
+    container_name: performance-service
+    ports:
+      - "8086:8086"
+    restart: always
+    env_file: .env
+    depends_on:
+      - eureka-server
+
+  dashboard-service:
+    build: ./dashboard-service/VMS-DASHBOARD
+    container_name: dashboard-service
+    ports:
+      - "8087:8087"
+    restart: always
+    depends_on:
+      - eureka-server
