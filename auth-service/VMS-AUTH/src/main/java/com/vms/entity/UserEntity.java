@@ -1,9 +1,6 @@
 package com.vms.entity;
-
 import java.util.UUID;
-
 import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,7 +13,6 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name="users")
 @Data
@@ -24,22 +20,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserEntity {
-
 	@Id
 	@GeneratedValue
 	private UUID id;
-	
 	@Column(unique = true)
 	private String email;
-	
 	private String password;
-	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private Boolean is_first_login = true;
-	
 	@Enumerated(EnumType.STRING)
 	private Role role;
-
-	
 	}
-

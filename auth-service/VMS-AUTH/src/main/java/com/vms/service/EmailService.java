@@ -1,24 +1,15 @@
 package com.vms.service;
-
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-
     private final JavaMailSender mailSender;
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // SHARED LAYOUT HELPERS
-    // ─────────────────────────────────────────────────────────────────────────
-
     private String wrap(String bodyContent) {
         return """
             <!DOCTYPE html>
@@ -35,7 +26,6 @@ public class EmailService {
                     <table width="580" cellpadding="0" cellspacing="0"
                            style="background:#ffffff;border-radius:12px;overflow:hidden;
                                   box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-
                       <!-- HEADER -->
                       <tr>
                         <td style="background:linear-gradient(135deg,#1e3a5f 0%%,#2d6a9f 100%%);
@@ -51,14 +41,12 @@ public class EmailService {
                           </p>
                         </td>
                       </tr>
-
                       <!-- BODY -->
                       <tr>
                         <td style="padding:40px 40px 32px;">
                           %s
                         </td>
                       </tr>
-
                       <!-- FOOTER -->
                       <tr>
                         <td style="background:#f8fafc;border-top:1px solid #e8ecf0;
@@ -72,7 +60,6 @@ public class EmailService {
                           </p>
                         </td>
                       </tr>
-
                     </table>
                   </td>
                 </tr>
@@ -81,7 +68,6 @@ public class EmailService {
             </html>
             """.formatted(bodyContent);
     }
-
     private String infoRow(String label, String value) {
         return """
             <tr>
@@ -95,25 +81,19 @@ public class EmailService {
             </tr>
             """.formatted(label, value);
     }
-
     private void send(String to, String subject, String html) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(html, true); // true = HTML
+            helper.setText(html, true); 
             mailSender.send(message);
             log.info("Email sent → {} | Subject: {}", to, subject);
         } catch (Exception e) {
             log.error("Failed to send email to {}: {}", to, e.getMessage(), e);
         }
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // 1. OTP EMAIL
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void sendOtpEmail(String toEmail, String otp) {
         String body = """
             <h2 style="margin:0 0 6px;color:#1e293b;font-size:22px;font-weight:700;">
@@ -123,7 +103,6 @@ public class EmailService {
               We received a request to reset your VMS account password.
               Use the verification code below to proceed.
             </p>
-
             <!-- OTP BOX -->
             <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);
                         border:2px dashed #93c5fd;border-radius:12px;
@@ -140,7 +119,6 @@ public class EmailService {
                 &#9201; Valid for <strong>5 minutes</strong>
               </p>
             </div>
-
             <!-- WARNING -->
             <div style="background:#fefce8;border-left:4px solid #fbbf24;
                         border-radius:6px;padding:14px 16px;margin-bottom:24px;">
@@ -150,19 +128,12 @@ public class EmailService {
                 Your account remains secure.
               </p>
             </div>
-
             <p style="margin:0;color:#94a3b8;font-size:12px;text-align:center;">
               Never share this code with anyone, including VMS support staff.
             </p>
             """.formatted(otp);
-
         send(toEmail, "🔐 Your VMS Password Reset Code", wrap(body));
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // 2. VENDOR WELCOME EMAIL
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void sendVendorCredentials(String email, String accessKey) {
         String body = """
             <!-- WELCOME BADGE -->
@@ -174,7 +145,6 @@ public class EmailService {
                 </span>
               </div>
             </div>
-
             <h2 style="margin:0 0 6px;color:#1e293b;font-size:22px;font-weight:700;
                        text-align:center;">
               Welcome to VMS
@@ -184,7 +154,6 @@ public class EmailService {
               Your vendor account has been created and is pending approval.<br/>
               Use the credentials below to access the portal.
             </p>
-
             <!-- CREDENTIALS TABLE -->
             <div style="background:#f8fafc;border:1px solid #e2e8f0;
                         border-radius:10px;overflow:hidden;margin-bottom:28px;">
@@ -199,10 +168,9 @@ public class EmailService {
                 %s
               </table>
             </div>
-
             <!-- ACTION BUTTON -->
             <div style="text-align:center;margin-bottom:28px;">
-              <a href="https://vms-project-deployed.vercel.app"
+              <a href="https:
                  style="display:inline-block;background:linear-gradient(135deg,#1e3a5f,#2d6a9f);
                         color:#ffffff;text-decoration:none;padding:14px 36px;
                         border-radius:8px;font-size:14px;font-weight:600;
@@ -210,7 +178,6 @@ public class EmailService {
                 Log In to VMS Portal →
               </a>
             </div>
-
             <!-- IMPORTANT NOTICE -->
             <div style="background:#fff7ed;border-left:4px solid #f97316;
                         border-radius:6px;padding:14px 16px;">
@@ -227,14 +194,8 @@ public class EmailService {
                         "background:#f1f5f9;padding:3px 8px;border-radius:4px;" +
                         "color:#dc2626;font-weight:700;\">" + accessKey + "</span>")
             );
-
         send(email, "🎉 Welcome to VMS — Your Vendor Account is Ready", wrap(body));
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // 3. STAFF WELCOME EMAIL
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void sendStaffCredentials(String email, String name, String role, String accessKey) {
         String roleColor = switch (role.toUpperCase()) {
             case "ADMIN"       -> "#7c3aed";
@@ -242,14 +203,12 @@ public class EmailService {
             case "FINANCE"     -> "#047857";
             default            -> "#1e3a5f";
         };
-
         String roleIcon = switch (role.toUpperCase()) {
             case "ADMIN"       -> "&#128081;";
             case "PROCUREMENT" -> "&#128203;";
             case "FINANCE"     -> "&#128200;";
             default            -> "&#128100;";
         };
-
         String body = """
             <!-- ROLE BADGE -->
             <div style="text-align:center;margin-bottom:28px;">
@@ -260,7 +219,6 @@ public class EmailService {
                 </span>
               </div>
             </div>
-
             <h2 style="margin:0 0 6px;color:#1e293b;font-size:22px;font-weight:700;
                        text-align:center;">
               Hello, %s!
@@ -270,7 +228,6 @@ public class EmailService {
               Your VMS staff account has been set up.<br/>
               You now have access to the portal with <strong>%s</strong> privileges.
             </p>
-
             <!-- CREDENTIALS TABLE -->
             <div style="background:#f8fafc;border:1px solid #e2e8f0;
                         border-radius:10px;overflow:hidden;margin-bottom:28px;">
@@ -286,17 +243,15 @@ public class EmailService {
                 %s
               </table>
             </div>
-
             <!-- ACTION BUTTON -->
             <div style="text-align:center;margin-bottom:28px;">
-              <a href="https://vms-project-deployed.vercel.app"
+              <a href="https:
                  style="display:inline-block;color:#ffffff;text-decoration:none;
                         padding:14px 36px;border-radius:8px;font-size:14px;
                         font-weight:600;letter-spacing:0.5px;background:%s;">
                 Access VMS Portal →
               </a>
             </div>
-
             <!-- SECURITY NOTICE -->
             <div style="background:#fff7ed;border-left:4px solid #f97316;
                         border-radius:6px;padding:14px 16px;">
@@ -312,7 +267,6 @@ public class EmailService {
                 roleIcon, role,
                 name, role,
                 roleColor,
-               
                 infoRow("Email Address", email),
                 infoRow("Access Key",
                     "<span style=\"font-family:'Courier New',monospace;" +
@@ -320,7 +274,6 @@ public class EmailService {
                     "color:#dc2626;font-weight:700;\">" + accessKey + "</span>"),
                 roleColor
             );
-
         send(email, roleIcon + " VMS — Your " + role + " Account Has Been Created", wrap(body));
     }
 }

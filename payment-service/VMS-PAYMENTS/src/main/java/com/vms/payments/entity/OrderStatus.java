@@ -1,7 +1,4 @@
 package com.vms.payments.entity;
-
-
-
 public enum OrderStatus {
     CREATED,
     APPROVED,
