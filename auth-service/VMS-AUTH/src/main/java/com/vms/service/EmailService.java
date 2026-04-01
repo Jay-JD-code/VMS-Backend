@@ -202,7 +202,7 @@ public class EmailService {
 
             <!-- ACTION BUTTON -->
             <div style="text-align:center;margin-bottom:28px;">
-              <a href="#"
+              <a href="https://vms-project-deployed.vercel.app"
                  style="display:inline-block;background:linear-gradient(135deg,#1e3a5f,#2d6a9f);
                         color:#ffffff;text-decoration:none;padding:14px 36px;
                         border-radius:8px;font-size:14px;font-weight:600;
@@ -289,7 +289,7 @@ public class EmailService {
 
             <!-- ACTION BUTTON -->
             <div style="text-align:center;margin-bottom:28px;">
-              <a href="#"
+              <a href="https://vms-project-deployed.vercel.app"
                  style="display:inline-block;color:#ffffff;text-decoration:none;
                         padding:14px 36px;border-radius:8px;font-size:14px;
                         font-weight:600;letter-spacing:0.5px;background:%s;">
@@ -312,7 +312,7 @@ public class EmailService {
                 roleIcon, role,
                 name, role,
                 roleColor,
-                infoRow("Full Name", name),
+               
                 infoRow("Email Address", email),
                 infoRow("Access Key",
                     "<span style=\"font-family:'Courier New',monospace;" +

@@ -50,18 +50,18 @@ public class S3Service {
 
     // ✅ ADDED: Download pre-signed URL ─────────────────────────────────────────
     public String generateDownloadUrl(String fileKey) {
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(fileKey)
-                .build();
+    GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key(fileKey)
+            .responseContentDisposition("attachment; filename=\"" + fileKey.substring(fileKey.lastIndexOf("/") + 1) + "\"")
+            .build();
 
-        GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .getObjectRequest(getObjectRequest)
-                .signatureDuration(Duration.ofMinutes(10))
-                .build();
+    GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+            .getObjectRequest(getObjectRequest)
+            .signatureDuration(Duration.ofMinutes(60))
+            .build();
 
-        PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
-
-        return presignedRequest.url().toString();
-    }
+    PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
+    return presignedRequest.url().toString();
+}
 }

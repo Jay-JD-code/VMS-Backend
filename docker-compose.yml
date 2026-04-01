@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   eureka-server:
@@ -8,6 +6,7 @@ services:
     ports:
       - "8761:8761"
     restart: always
+    mem_limit: 256m
 
   api-gateway:
     build: ./api-gateway/VMS-API-GATEWAY
@@ -17,6 +16,7 @@ services:
     restart: always
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   auth-service:
     build: ./auth-service/VMS-AUTH
@@ -27,6 +27,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   vendor-service:
     build: ./vendor-service/VMS-VENDOR
@@ -37,6 +38,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   document-service:
     build: ./document-service/VMS-DOCUMENT
@@ -47,6 +49,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   order-service:
     build: ./order-service/VMS-ORDERS
@@ -57,6 +60,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   payment-service:
     build: ./payment-service/VMS-PAYMENTS
@@ -67,6 +71,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   performance-service:
     build: ./performance-service/VMS-PERFORMANCE
@@ -77,6 +82,7 @@ services:
     env_file: .env
     depends_on:
       - eureka-server
+    mem_limit: 200m
 
   dashboard-service:
     build: ./dashboard-service/VMS-DASHBOARD
@@ -86,3 +92,4 @@ services:
     restart: always
     depends_on:
       - eureka-server
+    mem_limit: 200m
