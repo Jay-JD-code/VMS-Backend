@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.vms.dto.LoginResponse;
-import com.vms.controller.dto.ChangePasswordRequest;
+import com.vms.dto.ChangePasswordRequest;
 import com.vms.dto.ForgotPasswordRequest;
 import com.vms.dto.LoginRequest;
 import com.vms.dto.RegisterRequest;

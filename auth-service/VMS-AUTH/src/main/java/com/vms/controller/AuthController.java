@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.vms.controller.dto.ChangePasswordRequest;
+import com.vms.dto.ChangePasswordRequest;
 import com.vms.dto.ForgotPasswordRequest;
 import com.vms.dto.LoginRequest;
 import com.vms.dto.LoginResponse;
