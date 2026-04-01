@@ -1,4 +1,4 @@
-package com.vms.controller.dto;
+package com.vms.dto;
 import lombok.Data;
 @Data
 public class ChangePasswordRequest {
